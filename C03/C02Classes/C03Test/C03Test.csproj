@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\C02Classes\C03Classes.csproj" />
+    <ProjectReference Include="..\LisvokSubstitution\LiskovSubstitution.csproj" />
   </ItemGroup>
 
 </Project>
