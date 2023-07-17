@@ -1,9 +1,17 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.CodeAnalysis;
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.OpenApi.Any;
 
-var builder = WebApplication.CreateBuilder(args); 
-var app = builder.Build(); 
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 #region Inputs
 
@@ -93,6 +101,53 @@ Results<Ok, Conflict> MultipleResultsDelegate(int number)
 
 #endregion
 
+#region Metadata
+
+var metadataGroup = app
+    .MapGroup("minimal-endpoint-metadata")
+    .WithTags("Metadata Endpoints")
+    .WithOpenApi()
+;
+
+
+const string NamedEndpointName = "Named Endpoint";
+metadataGroup
+    .MapGet("with-name", () => $"Endpoint with name '{NamedEndpointName}'.")
+    .WithName(NamedEndpointName)
+    .WithOpenApi(operation =>
+    {
+        operation.Description = "An endpoint that returns its name.";
+        operation.Summary = $"Endpoint named '{NamedEndpointName}'.";
+        operation.Deprecated = true;
+        return operation;
+    });
+
+metadataGroup
+    .MapGet("url-of-named-endpoint/{endpointName?}", (string? endpointName, LinkGenerator linker) =>
+    {
+        var name = endpointName ?? NamedEndpointName;
+        return new
+        {
+            name,
+            uri = linker.GetPathByName(name)
+        };
+    })
+    .WithDescription("Return the URL of the specified named endpoint.")
+    .WithOpenApi(operation =>
+    {
+        var endpointName = operation.Parameters[0];
+        endpointName.Description = "The name of the endpoint to get the URL for.";
+        endpointName.AllowEmptyValue = true;
+        endpointName.Example = new OpenApiString(NamedEndpointName);
+        return operation;
+    });
+
+metadataGroup
+    .MapGet("excluded-from-open-api", () => { })
+    .ExcludeFromDescription()
+;
+
+#endregion
 
 app.Run();
 
