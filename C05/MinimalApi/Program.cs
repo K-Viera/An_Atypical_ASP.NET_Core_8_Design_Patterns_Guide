@@ -32,5 +32,10 @@ app.MapGet(
    (Coordinate coordinate) => coordinate
 );
 
+app.MapGet(
+    "minimal-endpoint-input-Person/",
+    (Person person) => person
+);
+
 app.Run();
 
