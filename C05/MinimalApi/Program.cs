@@ -24,9 +24,9 @@ app.UseSwaggerUI();
 
 app.MapGet("minimal-endpoint-inline", () => "GET!");
 
-app.MapGet( 
-    "minimal-endpoint-input-route-implicit/{id}",  
-    (int id) => $"The id was {id}." 
+app.MapGet(
+    "minimal-endpoint-input-route-implicit/{id}",
+    (int id) => $"The id was {id}."
 );
 
 app.MapGet(
@@ -40,10 +40,10 @@ app.MapGet(
        => context.Response.WriteAsync("HttpContext!")
 );
 
-app.MapGet( 
-   "minimal-endpoint-input-HttpResponse/", 
-   (HttpResponse response) 
-       => response.WriteAsync("HttpResponse!") 
+app.MapGet(
+   "minimal-endpoint-input-HttpResponse/",
+   (HttpResponse response)
+       => response.WriteAsync("HttpResponse!")
 );
 
 app.MapGet(
@@ -55,32 +55,35 @@ app.MapGet(
     "minimal-endpoint-input-Person/",
     (Person person) => person
 );
-app.MapGet( 
-    "minimal-endpoint-input-Person2/", 
-    ([AsParameters] Person2 person) => person 
-); 
+app.MapGet(
+    "minimal-endpoint-input-Person2/",
+    ([AsParameters] Person2 person) => person
+);
 
 #endregion
 
 #region Outputs
 
-app.MapGet( 
-    "minimal-endpoint-output-coordinate/", 
-    () => new Coordinate { 
-        Latitude = 43.653225, 
-        Longitude = -79.383186 
-    } 
-); 
+app.MapGet(
+    "minimal-endpoint-output-coordinate/",
+    () => new Coordinate
+    {
+        Latitude = 43.653225,
+        Longitude = -79.383186
+    }
+);
 
 app.MapGet("minimal-endpoint-output-coordinate-ok1/", () =>
-    Results.Ok(new Coordinate {
+    Results.Ok(new Coordinate
+    {
         Latitude = 43.653225,
         Longitude = -79.383186
     })
 );
 
 app.MapGet("minimal-endpoint-output-coordinate-ok2/", () =>
-    TypedResults.Ok(new Coordinate {
+    TypedResults.Ok(new Coordinate
+    {
         Latitude = 43.653225,
         Longitude = -79.383186
     })
@@ -96,7 +99,7 @@ app.MapGet(
 
 app.MapGet(
     "multiple-TypedResults-delegate/{number}",
-    (int number)=>MultipleResultsDelegate(number)
+    (int number) => MultipleResultsDelegate(number)
 );
 
 Results<Ok, Conflict> MultipleResultsDelegate(int number)
@@ -167,12 +170,13 @@ var jsonGroup = app
     .WithOpenApi()
 ;
 
-jsonGroup.MapGet( 
-    "kebab-person/", 
-    () => new { 
-        FirstName = "John", 
-        LastName = "Doe" 
-    } 
+jsonGroup.MapGet(
+    "kebab-person/",
+    () => new
+    {
+        FirstName = "John",
+        LastName = "Doe"
+    }
 );
 
 var kebabSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
@@ -199,12 +203,91 @@ jsonGroup.MapGet(
 );
 
 #endregion
+
+#region inline
+
+var inlineGroup = app
+    .MapGroup("inline-filter")
+    .WithTags("Leveraging endpoint filters")
+    .WithOpenApi()
+;
+
+inlineGroup
+    .MapGet("basic", () => { })
+    .AddEndpointFilter((context, next) =>
+    {
+        return next(context);
+    });
+
+inlineGroup.MapGet("good-rating/{rating}", (Rating rating) =>
+        TypedResults.Ok(new { Rating = rating }))
+    .AddEndpointFilter(async (context, next) =>
+    {
+        var rating = context.GetArgument<Rating>(0);
+
+        if (rating == Rating.Bad)
+        {
+            return TypedResults.Problem(
+                detail: "This endpoint is biased and only accepts positive ratings.",
+                statusCode: StatusCodes.Status400BadRequest
+            );
+        }
+
+        return await next(context);
+    });
+
+//we can also extract this filter logic into a separate class 
+//and use it in multiple endpoints or groups
+
+
+app.MapGet("good-rating/{rating}", (Rating rating)
+    => TypedResults.Ok(new { Rating = rating }))
+    .AddEndpointFilter<GoodRatingFilter>()
+;
+
+var filterGroup = app
+    .MapGroup("filter group")
+    .WithTags("Filter Group Example")
+    .WithOpenApi()
+    .AddEndpointFilter<GoodRatingFilter>();
+;
+
+filterGroup
+.MapGet("good-rating/{rating}", (Rating rating)
+    => TypedResults.Ok(new { Rating = rating }))
+;
+
+filterGroup
+.MapGet("good-rating2/{rating}&{review}", (Rating rating,string review)
+    => TypedResults.Ok(new { Rating = rating, Review = review }))
+;
+
+inlineGroup.MapGet("endpoint-filter-factory", () => "RAW")
+    .AddEndpointFilterFactory((filterFactoryContext, next) =>
+    {
+        // Building RequestDelegate code here.
+        var logger = filterFactoryContext.ApplicationServices
+            .GetRequiredService<ILoggerFactory>()
+            .CreateLogger("endpoint-filter-factory");
+
+        logger.LogInformation("Code that runs when ASP.NET Core builds the RequestDelegate");
+
+        // Returns the EndpointFilterDelegate ASP.NET Core executes as part of the pipeline.
+        return async invocationContext =>
+        {
+            logger.LogInformation("Code that ASP.NET Core executes as part of the pipeline");
+            // Filter code here
+            return await next(invocationContext);
+        };
+    });
+
+#endregion
 app.Run();
 
-public class Person2 
-{ 
-    public required string Name { get; set; } 
-    public required DateOnly Birthday { get; set; } 
+public class Person2
+{
+    public required string Name { get; set; }
+    public required DateOnly Birthday { get; set; }
 }
 
 public enum Rating
@@ -213,4 +296,25 @@ public enum Rating
     Ok,
     Good,
     Amazing
+}
+
+
+public class GoodRatingFilter : IEndpointFilter
+{
+    public async ValueTask<object?> InvokeAsync(
+        EndpointFilterInvocationContext context,
+        EndpointFilterDelegate next)
+    {
+        var rating = context.GetArgument<Rating>(0);
+
+        if (rating == Rating.Bad)
+        {
+            return TypedResults.Problem(
+                detail: "This endpoint is biased and only accepts positive ratings.",
+                statusCode: StatusCodes.Status400BadRequest
+            );
+        }
+
+        return await next(context);
+    }
 }
