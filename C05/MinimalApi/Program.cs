@@ -2,11 +2,18 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Any;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower;
+});
 
 var app = builder.Build();
 
@@ -147,13 +154,63 @@ metadataGroup
     .ExcludeFromDescription()
 ;
 
+var enumSerializer = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+
 #endregion
 
+#region JSON Serialization
+
+
+var jsonGroup = app
+    .MapGroup("JSON-serialization")
+    .WithTags("JSON Serialization Endpoints")
+    .WithOpenApi()
+;
+
+jsonGroup.MapGet( 
+    "kebab-person/", 
+    () => new { 
+        FirstName = "John", 
+        LastName = "Doe" 
+    } 
+);
+
+var kebabSerializerOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+{
+    PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower
+};
+
+jsonGroup.MapGet("kebab-person2/", () => TypedResults.Json(new
+{
+    FirstName = "John",
+    LastName = "Doe"
+}, kebabSerializerOptions));
+
+enumSerializer.Converters.Add(new JsonStringEnumConverter());
+
+jsonGroup.MapGet(
+    "enum-as-string/",
+    () => TypedResults.Json(new
+    {
+        FirstName = "John",
+        LastName = "Doe",
+        Rating = Rating.Good,
+    }, enumSerializer)
+);
+
+#endregion
 app.Run();
 
 public class Person2 
 { 
     public required string Name { get; set; } 
     public required DateOnly Birthday { get; set; } 
-} 
+}
 
+public enum Rating
+{
+    Bad = 0,
+    Ok,
+    Good,
+    Amazing
+}
