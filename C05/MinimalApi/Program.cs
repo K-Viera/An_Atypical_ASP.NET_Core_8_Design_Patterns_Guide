@@ -1,4 +1,7 @@
 using System.Text.Json;
+using Shared.Models;
+using Shared.Data; 
+using Shared.DTO
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,15 +24,44 @@ app.MapOutputEndpoints();
 
 app.MapMetadataEndpoints();
 
-app.MapJsonSerializationEndpoints();
+app.MapInlineGroupEndpoints().MapJsonSerializationEndpoints();
 
-app.MapInlineGroupEndpoints();
+var group = app.MapOrganizingEndpointsComposable();
+
+group.MapPut("/{customerId}", async (int customerId, Customer input, ICustomerRepository customerRepository, CancellationToken cancellationToken) =>
+{
+    var updatedCustomer = await customerRepository.UpdateAsync(
+        input,
+        cancellationToken
+    );
+    if (updatedCustomer == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(updatedCustomer);
+});
+
+// // var group = app 
+// //     .MapGroup("/dto/customers") 
+// //     .WithTags("Customer DTO") 
+// //     .WithOpenApi() 
+// // ; 
+
+// group.MapGet("/", GetCustomersSummaryAsync)
+//     .WithName("GetAllCustomersSummary");
+
+// group.MapGet("/{customerId}", GetCustomerDetailsAsync)
+//     .WithName("GetCustomerDetailsById");
+
+// group.MapPut("/{customerId}", UpdateCustomerAsync)
+//     .WithName("UpdateCustomerWithDto");
+
+// group.MapPost("/", CreateCustomerAsync)
+//     .WithName("CreateCustomerWithDto");
+
+// group.MapDelete("/{customerId}", DeleteCustomerAsync)
+//     .WithName("DeleteCustomerWithDto");
 
 app.Run();
-
-public class Person2
-{
-    public required string Name { get; set; }
-    public required DateOnly Birthday { get; set; }
-}
 

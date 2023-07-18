@@ -47,4 +47,12 @@ public static class InputEndpoints
 
         #endregion
     }
+
+    public class Person2
+    {
+        public required string Name { get; set; }
+        public required DateOnly Birthday { get; set; }
+    }
+
 }
+

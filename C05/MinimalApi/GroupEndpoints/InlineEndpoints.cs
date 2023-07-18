@@ -1,6 +1,6 @@
 public static class InlineGroupEndpoints
 {
-    public static void MapInlineGroupEndpoints(
+    public static IEndpointRouteBuilder MapInlineGroupEndpoints(
      this IEndpointRouteBuilder app)
     {
         #region inline
@@ -80,6 +80,7 @@ public static class InlineGroupEndpoints
                 };
             });
 
+            return app;
         #endregion
     }
     public class GoodRatingFilter : IEndpointFilter
