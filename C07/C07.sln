@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategyPattern", "Strategy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractFactoryTest", "AbstractFactoryTest\AbstractFactoryTest.csproj", "{AECD2F26-1FB0-4379-BD45-D81556754172}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SingletonTest", "SingletonTest\SingletonTest.csproj", "{0F42B2D7-AD1F-4B7C-B938-0CDB8AF84F01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{AECD2F26-1FB0-4379-BD45-D81556754172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AECD2F26-1FB0-4379-BD45-D81556754172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AECD2F26-1FB0-4379-BD45-D81556754172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F42B2D7-AD1F-4B7C-B938-0CDB8AF84F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F42B2D7-AD1F-4B7C-B938-0CDB8AF84F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F42B2D7-AD1F-4B7C-B938-0CDB8AF84F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F42B2D7-AD1F-4B7C-B938-0CDB8AF84F01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
