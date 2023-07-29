@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resources", "Resources\Resources.csproj", "{CD79985D-C0CD-4090-B36A-D868F948AE91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Resources", "Resources\Resources.csproj", "{CD79985D-C0CD-4090-B36A-D868F948AE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrategyPattern", "StrategyPattern\StrategyPattern.csproj", "{A84D5FAA-C997-4621-87F2-706B40E88C5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrategyPattern", "StrategyPattern\StrategyPattern.csproj", "{A84D5FAA-C997-4621-87F2-706B40E88C5D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AbstractFactoryTest", "AbstractFactoryTest\AbstractFactoryTest.csproj", "{AECD2F26-1FB0-4379-BD45-D81556754172}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A84D5FAA-C997-4621-87F2-706B40E88C5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A84D5FAA-C997-4621-87F2-706B40E88C5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A84D5FAA-C997-4621-87F2-706B40E88C5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AECD2F26-1FB0-4379-BD45-D81556754172}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AECD2F26-1FB0-4379-BD45-D81556754172}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AECD2F26-1FB0-4379-BD45-D81556754172}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AECD2F26-1FB0-4379-BD45-D81556754172}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
