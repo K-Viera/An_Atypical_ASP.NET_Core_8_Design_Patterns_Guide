@@ -62,6 +62,7 @@ namespace StrategyTest
                 Assert.Equal(expectedArray[i].Name, resultArray[i].Name);
             }
         }
+
         [Fact]
         public async Task Mock_the_ILocationService()
         {
