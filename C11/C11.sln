@@ -3,9 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33920.267
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddingBehaviors", "AddingBehaviors\AddingBehaviors.csproj", "{B63C35EE-2901-4243-B4EB-CBA1D58DE0F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddingBehaviors", "AddingBehaviors\AddingBehaviors.csproj", "{B63C35EE-2901-4243-B4EB-CBA1D58DE0F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookStore", "BookStore\BookStore.csproj", "{175D99C2-F3D8-47C0-BFC3-0662E59725BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookStore", "BookStore\BookStore.csproj", "{175D99C2-F3D8-47C0-BFC3-0662E59725BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Greeter", "Greeter\Greeter.csproj", "{2AC8077F-C319-4A27-AF8D-4402CE326A89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "facades\Facade.csproj", "{CE742FC0-8E6B-4051-8E1B-0874B21E8AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpaqueFacadeSubSystem", "OpaqueFacadeSubSystem\OpaqueFacadeSubSystem.csproj", "{4F0B3E0C-D318-47D5-AB67-45768251FFAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransparentFacadeSubSystem", "TransparentFacadeSubSystem\TransparentFacadeSubSystem.csproj", "{41A0D5C4-D8B6-4119-8CC4-ABC1256BB53D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +29,22 @@ Global
 		{175D99C2-F3D8-47C0-BFC3-0662E59725BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{175D99C2-F3D8-47C0-BFC3-0662E59725BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{175D99C2-F3D8-47C0-BFC3-0662E59725BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AC8077F-C319-4A27-AF8D-4402CE326A89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AC8077F-C319-4A27-AF8D-4402CE326A89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AC8077F-C319-4A27-AF8D-4402CE326A89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AC8077F-C319-4A27-AF8D-4402CE326A89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE742FC0-8E6B-4051-8E1B-0874B21E8AED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE742FC0-8E6B-4051-8E1B-0874B21E8AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE742FC0-8E6B-4051-8E1B-0874B21E8AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE742FC0-8E6B-4051-8E1B-0874B21E8AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0B3E0C-D318-47D5-AB67-45768251FFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0B3E0C-D318-47D5-AB67-45768251FFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0B3E0C-D318-47D5-AB67-45768251FFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0B3E0C-D318-47D5-AB67-45768251FFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A0D5C4-D8B6-4119-8CC4-ABC1256BB53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A0D5C4-D8B6-4119-8CC4-ABC1256BB53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A0D5C4-D8B6-4119-8CC4-ABC1256BB53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A0D5C4-D8B6-4119-8CC4-ABC1256BB53D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

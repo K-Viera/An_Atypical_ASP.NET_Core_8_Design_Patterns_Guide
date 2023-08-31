@@ -7,5 +7,10 @@
         {
             _adaptee = adaptee;
         }
+
+        public string Greeting()
+        {
+            return _adaptee.GreetByName("ExternalGreeterAdapter");
+        }
     }
 }
