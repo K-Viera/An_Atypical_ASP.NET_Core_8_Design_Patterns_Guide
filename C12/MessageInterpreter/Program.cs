@@ -1,4 +1,5 @@
 using MessageInterpreter;
+using MessageInterpreter.MixingChain_Template;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMessageHandler>(
-    new AlarmTriggeredHandler(new AlarmPausedHandler(new AlarmStoppedHandler(new DefaultHandler()))));
-
+    //new AlarmTriggeredHandler(new AlarmPausedHandler(new AlarmStoppedHandler(new DefaultHandler()))));
+    new ImpAlarmTriggeredHandler(new ImpAlarmPausedHandler(new ImpAlarmStoppedHandler(new DefaultHandler()))));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
