@@ -15,7 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services// Web Layer
     .AddSingleton<IMapper<Product, ProductDetails>, ProductMapper>()
     .AddSingleton<IMapper<ProductNotFoundException, ProductNotFound>, ExceptionsMapper>()
-    .AddSingleton<IMapper<NotEnoughStockException, NotEnoughStock>, ExceptionsMapper>();
+    .AddSingleton<IMapper<NotEnoughStockException, NotEnoughStock>, ExceptionsMapper>()
+    .AddSingleton<IMappingService, ServiceLocatorMappingService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,7 +39,7 @@ app.MapGet("/products", async (
 });
 
 
-app.MapPost("/products/{productId:int}/remove-stocks", async (int productId, RemoveStocksCommand command, StockService stockService, IMapper<ProductNotFoundException, ProductNotFound> notFoundMapper, IMapper<NotEnoughStockException, NotEnoughStock> notEnoughStockMapper, CancellationToken cancellationToken) =>
+app.MapPost("/products/{productId:int}/remove-stocks", async (int productId, RemoveStocksCommand command, StockService stockService, IMappingService mapper, CancellationToken cancellationToken) =>
 {
     try
     {
@@ -47,11 +49,11 @@ app.MapPost("/products/{productId:int}/remove-stocks", async (int productId, Rem
     }
     catch (NotEnoughStockException ex)
     {
-        return Results.Conflict(notEnoughStockMapper.Map(ex));
+        return Results.Conflict(mapper.Map<NotEnoughStockException, NotEnoughStock>(ex));
     }
     catch (ProductNotFoundException ex)
     {
-        return Results.NotFound(notFoundMapper.Map(ex));
+        return Results.NotFound(mapper.Map<ProductNotFoundException, ProductNotFound>(ex));
     }
 }).Produces(200, typeof(StockLevel))
   .Produces(404, typeof(ProductNotFound))

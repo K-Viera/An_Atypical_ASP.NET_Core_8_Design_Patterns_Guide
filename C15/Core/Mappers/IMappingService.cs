@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core.Mappers
 {
-    public interface IMapper<TSource, TDestination>
+    public interface IMappingService
     {
-        TDestination Map(TSource entity);
+        TDestination Map<TSource, TDestination>(TSource entity);
     }
 }
