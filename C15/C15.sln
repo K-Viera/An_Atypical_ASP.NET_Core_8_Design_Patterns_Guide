@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Data.EF", "I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{0B81C757-73AD-45B4-B34F-11B261A44AEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperWeb", "MapperWeb\MapperWeb.csproj", "{BD9F143F-15A5-4F5E-A7EE-C1C0D776DAC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MapperWeb", "MapperWeb\MapperWeb.csproj", "{BD9F143F-15A5-4F5E-A7EE-C1C0D776DAC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMapperWeb", "AutoMapperWeb\AutoMapperWeb.csproj", "{DAA154EC-8EBF-4790-80D2-AEF31F0D46EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BD9F143F-15A5-4F5E-A7EE-C1C0D776DAC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD9F143F-15A5-4F5E-A7EE-C1C0D776DAC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD9F143F-15A5-4F5E-A7EE-C1C0D776DAC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAA154EC-8EBF-4790-80D2-AEF31F0D46EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAA154EC-8EBF-4790-80D2-AEF31F0D46EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAA154EC-8EBF-4790-80D2-AEF31F0D46EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAA154EC-8EBF-4790-80D2-AEF31F0D46EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
