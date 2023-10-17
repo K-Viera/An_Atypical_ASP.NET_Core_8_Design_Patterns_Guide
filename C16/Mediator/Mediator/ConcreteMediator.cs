@@ -1,4 +1,6 @@
-﻿namespace Mediator
+﻿using Mediator;
+
+namespace Mediator
 {
     public class ConcreteMediator : IMediator
     {
